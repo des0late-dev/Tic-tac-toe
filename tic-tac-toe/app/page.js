@@ -4,20 +4,26 @@ import React, { useState } from "react";
 export default function Home() {
 
 
+
+
  const [initialBoard, updatedBoard] = useState([
   [' ',' ',' '],
   [' ',' ',' '],
   [' ',' ',' ']])
 
   const [currentPlayer,updateCurrentPlayer] = useState("X")
+  const [winner,setWinner] = useState(null)
   
   function checkWinner(newBoard){
 for(let i=0;i<3;i++){
 if(newBoard[i][0]==="X" && newBoard[i][1]==="X" && newBoard[i][2]==="X" || newBoard[0][0]==="X" && newBoard[1][1]==="X" && newBoard[2][2]==="X" || newBoard[0][2]==="X" && newBoard[1][1]==="X" && newBoard[2][0]==="X"){
-console.log("X wins");
+setWinner("X")
+  console.log("X wins");
+
 }
 if(newBoard[i][0]==="O" && newBoard[i][1]==="O" && newBoard[i][2]==="O" || newBoard[0][0]==="O" && newBoard[1][1]==="O" && newBoard[2][2]==="O" || newBoard[0][2]==="O" && newBoard[1][1]==="O" && newBoard[2][0]==="O"){
-console.log("O wins");
+setWinner("O")
+  console.log("O wins");
 }}
 }
 
@@ -34,6 +40,11 @@ function togglePlayer (){
 }
 
 function onClickHandler (clickedRowIndex,clickedCellIndex){
+  if(winner==="X" || winner==="O"){
+    console.log("winner is "+ winner)
+    return;
+  }
+
   const clickedCell = initialBoard[clickedRowIndex][clickedCellIndex];
   if(clickedCell!==" "){
     return; 
@@ -41,6 +52,7 @@ function onClickHandler (clickedRowIndex,clickedCellIndex){
 
  
 const newBoard = initialBoard.map((row,rowIndex)=>{
+  
   if(rowIndex===clickedRowIndex){
     return row.map((cell,cellIndex)=>{
       if(cellIndex===clickedCellIndex){
